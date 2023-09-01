@@ -1,0 +1,40 @@
+import nltk
+import openai
+
+nltk.download('punkt')
+
+# Set your OpenAI API key
+openai.api_key = 'your-api-key-here'
+
+# Tokenize input text
+def tokenize(text):
+    return nltk.word_tokenize(text)
+
+print("ChatBot: Hi! How can I assist you today? (Type 'exit' to end)")
+
+while True:
+    user_input = input("You: ")
+    if user_input.lower() == 'exit':
+        print("ChatBot: Goodbye!")
+        break
+    
+    # Tokenize user input
+    tokens = tokenize(user_input)
+    
+    # Join tokens for GPT-3 prompt
+    prompt = ' '.join(tokens)
+    
+    # Use GPT-3 to generate a response
+    response = openai.Completion.create(
+        engine="text-davinci-003",  # Choose an appropriate engine
+        prompt=prompt,
+        max_tokens=50  # Set the length of the response
+    )
+    
+    # Get GPT-3 response text
+    gpt_response = response.choices[0].text.strip()
+    
+    print("ChatBot:", gpt_response)
+
+
+#This is a prototype for possible projects as well as an actual product.
